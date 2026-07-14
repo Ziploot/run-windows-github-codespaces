@@ -9,13 +9,8 @@ echo "=============================================="
 docker-compose up -d
 
 echo "=============================================="
-echo "⚡ Installing Cloudflare Tunnel..."
+echo "⚡ Exposing Windows Desktop via Serveo TCP..."
 echo "=============================================="
-curl -L -o cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-sudo dpkg -i cloudflared.deb
-rm cloudflared.deb
-
+echo "To get a free direct RDP link, execute this command:"
+echo "ssh -o StrictHostKeyChecking=no -R 0:localhost:3389 serveo.net"
 echo "=============================================="
-echo "⚡ Exposing Windows Desktop via Tunnel..."
-echo "=============================================="
-cloudflared tunnel --url http://localhost:8006
