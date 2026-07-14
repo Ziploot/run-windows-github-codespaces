@@ -4,13 +4,23 @@
 #  ======================================================
 
 echo "=============================================="
-echo "⚡ Starting Windows 11 Docker Container..."
+echo "⚡ Stopping existing containers and wiping old data..."
+echo "=============================================="
+docker-compose down -v || true
+rm -rf ./win_data || true
+mkdir -p ./win_data
+
+echo "=============================================="
+echo "⚡ Starting fresh Windows 11 with password..."
 echo "=============================================="
 docker-compose up -d
 
 echo "=============================================="
-echo "⚡ Exposing Windows Desktop via Serveo TCP..."
+echo "⚡ Downloading Bore TCP Tunnel..."
 echo "=============================================="
-echo "To get a free direct RDP link, execute this command:"
-echo "ssh -o StrictHostKeyChecking=no -R 0:localhost:3389 serveo.net"
+curl -sL https://github.com/ekzhang/bore/releases/download/v0.6.0/bore-v0.6.0-x86_64-unknown-linux-musl.tar.gz | tar -xz
+
 echo "=============================================="
+echo "⚡ Starting Bore TCP Tunnel..."
+echo "=============================================="
+./bore local 3389 --to bore.pub
