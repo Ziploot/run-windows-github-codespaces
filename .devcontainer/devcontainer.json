@@ -14,5 +14,5 @@
       ]
     }
   },
-  "postCreateCommand": "docker-compose up -d && curl -L -o cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb && rm cloudflared.deb"
+  "postCreateCommand": "docker-compose up -d && curl -L -o cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb && rm cloudflared.deb && nohup cloudflared tunnel --url http://localhost:8006 > /tmp/tunnel.log 2>&1 & sleep 20 && URL=$(grep -o -E 'https://[a-zA-Z0-9-]+\\.trycloudflare\\.com' /tmp/tunnel.log | head -n 1) && if [ ! -z \"$URL\" ]; then echo \"$URL\" > public_url.txt && git config --global user.email \"bot@ziploot.com\" && git config --global user.name \"Ziploot Bot\" && git add public_url.txt && git commit -m \"update public URL [skip ci]\" && git push origin main; fi"
 }
