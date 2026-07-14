@@ -7,6 +7,7 @@ services:
       VERSION: "11"
       RAM_SIZE: "8G"
       CPU_CORES: "4"
+      PASSWORD: "ZiplootPassword123"
     devices:
       - /dev/kvm
       - /dev/net/tun
